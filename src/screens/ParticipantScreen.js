@@ -1,5 +1,3 @@
-// Lokasi: src/screens/ParticipantScreen.js (Versi Cerdas dengan Logika Kondisional)
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, FlatList, ActivityIndicator } from 'react-native';
 import { db } from '../firebase/config';
@@ -12,7 +10,6 @@ const palette = {
   primary: '#111111',
 };
 
-// --- KOMPONEN UNTUK TAMPILAN Q&A ---
 const QandAView = ({ sessionId }) => {
   const [feedbackText, setFeedbackText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,7 +65,6 @@ const QandAView = ({ sessionId }) => {
   );
 };
 
-// --- KOMPONEN UNTUK TAMPILAN WORD CLOUD ---
 const WordCloudView = ({ sessionId, session}) => {
   const [feedbackText, setFeedbackText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -103,14 +99,12 @@ const WordCloudView = ({ sessionId, session}) => {
   );
 };
 
-// --- KOMPONEN UTAMA ParticipantScreen ---
 export default function ParticipantScreen({ route }) {
   const { sessionId } = route.params;
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Ambil detail sesi sekali saja untuk menentukan tipe sesi
     const getSessionDetails = async () => {
       if (!sessionId) return;
       const sessionDoc = await getDoc(doc(db, 'sessions', sessionId));
@@ -139,7 +133,6 @@ export default function ParticipantScreen({ route }) {
 }
 
 
-// --- KOMPONEN KECIL UNTUK ITEM Q&A ---
 const QuestionItem = ({ item, sessionId }) => {
   const [isVoting, setIsVoting] = useState(false);
   const handleUpvote = async () => {

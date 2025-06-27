@@ -15,7 +15,7 @@ const palette = {
   primary: '#111111',
 };
 
-const COMMENT_DURATION = 7000; // 7 detik
+const COMMENT_DURATION = 7000;  
 
 export default function PresenterScreen({ route }) {
   const { sessionId, sessionCode } = route.params;
@@ -60,7 +60,6 @@ export default function PresenterScreen({ route }) {
     return () => unsubscribe();
   }, [sessionId, addNewLiveComment]);
 
-  // FUNGSI renderVisualization YANG SEHARUSNYA ADA
   const renderVisualization = () => {
     if (loading || !session) {
       return <ActivityIndicator size="large" color={palette.accent} />;
@@ -86,12 +85,10 @@ export default function PresenterScreen({ route }) {
       {session?.type === 'WORD_CLOUD' && session.prompt && (
         <Text style={styles.promptText}>Pertanyaan: "{session.prompt}"</Text>
       )}
-      {/* Bagian Atas: Visualisasi Dinamis (Word Cloud atau Q&A) */}
       <View style={styles.visualizationContainer}>
         {renderVisualization()}
       </View>
 
-      {/* Bagian Bawah: Live Comments */}
       <View style={styles.liveCommentsContainer}>
         {liveComments.map(comment => (
           <View key={comment.id} style={styles.commentCard}>
@@ -104,7 +101,6 @@ export default function PresenterScreen({ route }) {
   );
 }
 
-// Styles tetap sama seperti sebelumnya
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: palette.surface, alignItems: 'center', paddingTop: 60, paddingHorizontal: 20 },
   title: { fontSize: 24, fontWeight: 'bold', color: palette.offWhite, textAlign: 'center' },

@@ -1,5 +1,3 @@
-// Lokasi: src/components/QandADisplay.js (Versi dengan Modal Jawaban)
-
 import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, TextInput, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { db } from '../firebase/config';
@@ -77,7 +75,6 @@ export default function QandADisplay({ entries, sessionId }) {
         contentContainerStyle={{ paddingTop: 10 }}
       />
 
-      {/* Modal untuk Menjawab Pertanyaan */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -119,7 +116,6 @@ const styles = StyleSheet.create({
   answerIndicator: { color: palette.success, fontSize: 12, fontStyle: 'italic', marginTop: 8 },
   emptyText: { color: palette.offWhite, fontStyle: 'italic', textAlign: 'center', marginTop: 50, fontSize: 16 },
   
-  // Modal Styles
   modalOverlay: { flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.7)' },
   modalContainer: { backgroundColor: palette.surface, padding: 20, borderTopLeftRadius: 20, borderTopRightRadius: 20 },
   modalTitle: { color: palette.accent, fontSize: 22, fontWeight: 'bold', marginBottom: 15 },

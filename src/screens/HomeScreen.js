@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList, Activity
 import { db } from '../firebase/config';
 import { collection, addDoc, serverTimestamp, query, where, getDocs, onSnapshot, orderBy } from 'firebase/firestore';
 import { MaterialIcons } from '@expo/vector-icons';
-import { getSavedSessions, saveSession } from '../utils/sessionManager';
+import { getCreatedSessions, saveCreatedSession, saveJoinedSession, getJoinedSessions } from '../utils/sessionManager';
+
 
 const palette = {
   surface: '#2F2F2F', 
@@ -13,15 +14,12 @@ const palette = {
 };
 
 export default function HomeScreen({ navigation }) {
-  // State untuk alur bergabung dengan kode
   const [joinCode, setJoinCode] = useState('');
   const [isJoining, setIsJoining] = useState(false);
 
-  // State untuk daftar sesi publik
   const [publicSessions, setPublicSessions] = useState([]);
   const [isFetchingPublic, setIsFetchingPublic] = useState(true);
 
-  // State untuk Modal pembuatan sesi
   const [isCreateModalVisible, setCreateModalVisible] = useState(false);
   const [sessionTitle, setSessionTitle] = useState('');
   const [isPublic, setIsPublic] = useState(false);
@@ -32,7 +30,6 @@ export default function HomeScreen({ navigation }) {
   const [infoModalVisible, setInfoModalVisible] = useState(false);
   const [selectedSession, setSelectedSession] = useState(null);
 
-  // Mengambil daftar sesi publik secara real-time
   useEffect(() => {
     const sessionsQuery = query(
       collection(db, 'sessions'),
@@ -51,13 +48,11 @@ export default function HomeScreen({ navigation }) {
     return () => unsubscribe();
   }, []);
 
-  // Fungsi untuk membuka modal pembuatan sesi
   const openCreateModal = (sessionType) => {
     setSessionTypeToCreate(sessionType);
     setCreateModalVisible(true);
   };
 
-  // Fungsi untuk membuat sesi baru
   const handleCreateSession = async () => {
     if (sessionTitle.trim() === '') { Alert.alert("Judul Kosong", "Silakan masukkan judul untuk sesi Anda."); return; }
     setIsCreating(true);
@@ -67,8 +62,7 @@ export default function HomeScreen({ navigation }) {
       const sessionData = { title: sessionTitle, sessionCode: code, type: sessionTypeToCreate, isActive: true, isPublic: isPublic, prompt: promptQuestion, description: sessionDescription, createdAt: serverTimestamp() };
       const sessionRef = await addDoc(collection(db, 'sessions'), sessionData);
       
-      // Menyimpan sesi ke penyimpanan lokal untuk 'Dasbor Saya'
-      await saveSession({ id: sessionRef.id, title: sessionTitle, code: code,  type: sessionTypeToCreate, });
+      await saveCreatedSession({ id: sessionRef.id, title: sessionTitle, code: code,  type: sessionTypeToCreate, });
       
       navigation.navigate('PresenterSession', { sessionId: sessionRef.id, sessionCode: code });
     } catch (error) { Alert.alert("Error", "Gagal membuat sesi baru."); } 
@@ -83,7 +77,7 @@ export default function HomeScreen({ navigation }) {
 
   const checkOwnershipAndNavigate = async (session) => {
     try {
-      const savedSessions = await getSavedSessions();
+      const savedSessions = await getCreatedSessions();
       const isOwner = savedSessions.some(s => s.id === session.id);
 
       if (isOwner) {
@@ -99,7 +93,6 @@ export default function HomeScreen({ navigation }) {
       openInfoModal(session);
     }
   };
-  // Fungsi untuk bergabung dengan kode
   const handleJoinWithCode = async () => {
     if (joinCode.trim() === '') { Alert.alert("Input Kosong", "Silakan masukkan kode sesi."); return; }
     setIsJoining(true);
@@ -118,7 +111,6 @@ export default function HomeScreen({ navigation }) {
   };
   
   const handleJoinPublicSession = (session) => {
-    //navigation.navigate('ParticipantSession', { sessionId: session.id });
     openInfoModal({ id: sessionDoc.id, ...sessionDoc.data() });
   };
 
@@ -128,8 +120,9 @@ export default function HomeScreen({ navigation }) {
     setInfoModalVisible(true);
   };
 
-  const handleJoinFromModal = () => {
+  const handleJoinFromModal =  async () => {
     if (!selectedSession) return;
+    await saveJoinedSession(selectedSession);
     setInfoModalVisible(false);
     navigation.navigate('ParticipantSession', { sessionId: selectedSession.id });
   };
@@ -190,7 +183,6 @@ export default function HomeScreen({ navigation }) {
         statusBarTranslucent={true}
       >
         <View style={styles.modalOverlay}>
-          {/* Terapkan style _light di sini */}
           <View style={styles.modalContainer_light}> 
             <Text style={styles.modalTitle_light}>Detail Sesi Baru</Text>
             
@@ -257,7 +249,7 @@ const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: palette.surface },
   container: { flex: 1 },
   privateSection: { width: '100%', alignItems: 'center', padding: 20, borderBottomWidth: 1, borderBottomColor: palette.primary },
-  title: { fontSize: 36, fontWeight: 'bold', color: palette.offWhite, marginBottom: 15, textAlign: 'center', marginTop: 50},
+  title: { fontSize: 60, fontWeight: 'bold', color: palette.offWhite, marginBottom: 15, textAlign: 'center', marginTop: 50},
   button: { flexDirection: 'row', backgroundColor: palette.accent, paddingVertical: 15, borderRadius: 10, width: '100%', alignItems: 'center', justifyContent: 'center', marginVertical: 6 },
   buttonSecondary: { backgroundColor: palette.primary, borderWidth: 2, borderColor: palette.accent }, 
   buttonText: { color: palette.primary, fontSize: 18, fontWeight: 'bold', marginLeft: 10 },
@@ -311,12 +303,12 @@ const styles = StyleSheet.create({
   },
   modalContainer_light: {
     width: '90%',
-    backgroundColor: 'white', // Latar belakang modal menjadi PUTIH
+    backgroundColor: 'white',
     padding: 25,
     borderRadius: 15,
   },
   modalTitle_light: {
-    color: palette.primary, // Teks menjadi HITAM
+    color: palette.primary, 
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 20,

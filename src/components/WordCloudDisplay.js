@@ -1,5 +1,3 @@
-// Lokasi: src/components/WordCloudDisplay.js (Versi Manual & Stabil)
-
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
@@ -21,7 +19,7 @@ export default function WordCloudDisplay({ entries }) {
     if (!entries || entries.length === 0) return [];
     const wordFrequencies = new Map();
     entries.forEach(entry => {
-      if (!entry.text) return; // Pengaman jika ada entri tanpa teks
+      if (!entry.text) return; 
       const words = entry.text.toLowerCase().split(/\s+/);
       words.forEach(word => {
         const cleanedWord = word.replace(/[.,!?"'()]/g, '');
@@ -68,8 +66,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   wordContainer: {
-    flexDirection: 'row', // Membuat kata-kata berjajar
-    flexWrap: 'wrap',     // Jika tidak muat, akan pindah ke baris baru
+    flexDirection: 'row', 
+    flexWrap: 'wrap',     
     justifyContent: 'center',
     alignItems: 'center',
   },

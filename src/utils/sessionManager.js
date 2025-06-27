@@ -1,25 +1,52 @@
-// Lokasi: src/utils/sessionManager.js
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SAVED_SESSIONS_KEY = '@MyCreatedSessions';
+const CREATED_SESSIONS_KEY = '@MyCreatedSessions';
+const JOINED_SESSIONS_KEY = '@JoinedSessionsHistory';
 
-export const getSavedSessions = async () => {
+
+export const getCreatedSessions = async () => {
   try {
-    const jsonValue = await AsyncStorage.getItem(SAVED_SESSIONS_KEY);
+    const jsonValue = await AsyncStorage.getItem(CREATED_SESSIONS_KEY);
     return jsonValue != null ? JSON.parse(jsonValue) : [];
   } catch (e) {
-    console.error("Gagal mengambil sesi dari storage", e);
+    console.error("Gagal mengambil sesi buatan dari storage", e);
     return [];
   }
 };
 
-export const saveSession = async (newSession) => {
+export const saveCreatedSession = async (newSession) => {
   try {
-    const existingSessions = await getSavedSessions();
+    const existingSessions = await getCreatedSessions();
+    if (existingSessions.some(s => s.id === newSession.id)) return;
     const updatedSessions = [...existingSessions, newSession];
     const jsonValue = JSON.stringify(updatedSessions);
-    await AsyncStorage.setItem(SAVED_SESSIONS_KEY, jsonValue);
+    await AsyncStorage.setItem(CREATED_SESSIONS_KEY, jsonValue);
   } catch (e) {
-    console.error("Gagal menyimpan sesi ke storage", e);
+    console.error("Gagal menyimpan sesi buatan ke storage", e);
+  }
+};
+
+
+
+export const getJoinedSessions = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(JOINED_SESSIONS_KEY);
+    return jsonValue != null ? JSON.parse(jsonValue) : [];
+  } catch (e) {
+    console.error("Gagal mengambil riwayat sesi dari storage", e);
+    return [];
+  }
+};
+
+export const saveJoinedSession = async (sessionToJoin) => {
+  try {
+    const existingSessions = await getJoinedSessions();
+    if (existingSessions.some(s => s.id === sessionToJoin.id)) return;
+
+    const updatedSessions = [...existingSessions, sessionToJoin];
+    const jsonValue = JSON.stringify(updatedSessions);
+    await AsyncStorage.setItem(JOINED_SESSIONS_KEY, jsonValue);
+  } catch (e) {
+    console.error("Gagal menyimpan riwayat sesi ke storage", e);
   }
 };

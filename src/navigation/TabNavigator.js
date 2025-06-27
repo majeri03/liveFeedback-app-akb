@@ -6,6 +6,7 @@ import InfoScreen from '../screens/InfoScreen';
 
 import HomeScreen from '../screens/HomeScreen';
 import DashboardScreen from '../screens/DashboardScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,9 +51,19 @@ export default function MainTabNavigator() {
         name="DashboardTab" 
         component={DashboardScreen}
         options={{
-          title: 'Dasbor Saya',
+          title: 'Dashbor',
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="dashboard" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen 
+      name="HistoryTab" 
+      component={HistoryScreen}
+      options={{
+        title: 'Riwayat',
+        tabBarIcon: ({ color, size }) => (
+          <MaterialIcons name="history" color={color} size={size} />
           ),
         }}
       />

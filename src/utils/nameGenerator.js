@@ -1,13 +1,11 @@
-// Lokasi: src/utils/nameGenerator.js
-
 const ADJECTIVES = [
-  'Cerdik', 'Cepat', 'Kuat', 'Bijak', 'Unik', 'Gesit', 'Tangguh',
-  'Jenaka', 'Misterius', 'Elegan', 'Sederhana', 'Juara'
+  'Cerdik', 'Cepat', 'Kuat', 'si paling', 'sang legenda kelas A', 'noname', 'Tangguh',
+  'Jenaka', 'Misterius', 'x', 'Intropert', 'Juara'
 ];
 
 const ANIMALS = [
-  'Panda', 'Elang', 'Harimau', 'Kancil', 'Serigala', 'Naga',
-  'Kuda', 'Merpati', 'Rajawali', 'Macan', 'Penyu', 'Lumba-lumba'
+  'Panda', 'Garuda', 'Harimau', 'Kancil', 'Serigala', 'Naga',
+  'Kuda', 'Merpati', 'tikus', 'Macan', 'kucing', 'Lumba-lumba'
 ];
 
 export const generateRandomName = () => {

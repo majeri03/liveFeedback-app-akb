@@ -1,5 +1,3 @@
-// Lokasi: src/screens/InfoScreen.js
-
 import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, Linking } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -11,14 +9,13 @@ const palette = {
   primary: '#111111',
 };
 
-// Mendapatkan tahun saat ini secara dinamis untuk copyright
 const currentYear = new Date().getFullYear();
 
 export default function InfoScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
-        <MaterialIcons name="feedback" size={60} color={palette.accent} />
+        <MaterialIcons name="feedback" size={80} color={palette.accent} />
         <Text style={styles.appName}>Live Feedback App</Text>
         <Text style={styles.version}>Versi 1.0.0</Text>
 
@@ -31,9 +28,12 @@ export default function InfoScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Tim Pengembang</Text>
-          <Text style={styles.developerName}>Majeri</Text>
-          <Text style={styles.developerName}>Nama Anggota Tim 1</Text>
-           <Text style={styles.developerName}>Nama Anggota Tim 2</Text>
+          <Text style={styles.developerName}>Majeri [ 105841103622 ]</Text>
+          <Text style={styles.developerName}>Ali Sulton S Palilati [105841102222]</Text>
+          <Text style={styles.developerName}>Ahmad Fatir [105841102922]</Text>
+          <Text style={styles.developerName}>Siti Marwa [105841100122]</Text>
+          <Text style={styles.developerName}>Nur Milani Hidayah [105841100822]</Text>
+          <Text style={styles.developerName}>Absarmarsal Rizwal Mahua [105841101522]</Text>
         </View>
 
         <View style={styles.footer}>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   copyright: {
     fontSize: 12,
-    color: '#777',
+    color: palette.offWhite,
     textAlign: 'center',
   }
 });
