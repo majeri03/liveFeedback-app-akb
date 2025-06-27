@@ -17,7 +17,8 @@ const palette = {
 
 const COMMENT_DURATION = 7000; // 7 detik
 
-export default function PresenterScreen({ sessionId, sessionCode }) {
+export default function PresenterScreen({ route }) {
+  const { sessionId, sessionCode } = route.params;
   const [session, setSession] = useState(null);
   const [allEntries, setAllEntries] = useState([]);
   const [liveComments, setLiveComments] = useState([]);
@@ -78,8 +79,13 @@ export default function PresenterScreen({ sessionId, sessionCode }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{session ? session.title : 'Memuat...'}</Text>
+      {session?.description && (
+        <Text style={styles.descriptionText}>{session.description}</Text>
+      )}
       <Text style={styles.subTitle}>Kode Sesi: <Text style={styles.code}>{sessionCode}</Text></Text>
-      
+      {session?.type === 'WORD_CLOUD' && session.prompt && (
+        <Text style={styles.promptText}>Pertanyaan: "{session.prompt}"</Text>
+      )}
       {/* Bagian Atas: Visualisasi Dinamis (Word Cloud atau Q&A) */}
       <View style={styles.visualizationContainer}>
         {renderVisualization()}
@@ -138,4 +144,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   emptyText: { color: palette.offWhite, fontStyle: 'italic', textAlign: 'center', marginTop: 20 },
+  promptText: {
+  color: '#ccc',
+  fontSize: 16,
+  fontStyle: 'italic',
+  textAlign: 'center',
+  marginTop: 10,
+  marginBottom: -10,
+  },
+  descriptionText: {
+  color: '#ccc',
+  fontSize: 15,
+  textAlign: 'center',
+  fontStyle: 'italic',
+  marginTop: 4,
+  marginBottom: 10,
+  paddingHorizontal: 10,
+},
 });

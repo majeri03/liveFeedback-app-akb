@@ -3,30 +3,25 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-// Palet warna kita untuk styling
 const palette = {
   accent: '#FFCB74',
   offWhite: '#F6F6F6',
 };
 
-// Daftar kata umum dalam Bahasa Indonesia yang akan kita abaikan (tetap kita gunakan)
 const STOP_WORDS = new Set([
   'di', 'ke', 'dari', 'dan', 'atau', 'tapi', 'jika', 'maka', 'dengan', 'untuk',
   'pada', 'saat', 'seperti', 'yang', 'ini', 'itu', 'adalah', 'ialah', 'sangat',
   'juga', 'hanya', 'sudah', 'belum', 'akan', 'bisa', 'tidak', 'bukan', 'saya',
-  'anda', 'dia', 'kita', 'kami', 'kalian', 'mereka', 'ada', 'saja', 'lalu'
+  'anda', 'dia', 'kita', 'kami', 'kalian', 'mereka', 'ada', 'saja', 'lalu', 'sih', 'bagaimana'
 ]);
 
 export default function WordCloudDisplay({ entries }) {
 
-  // Logika pemrosesan teks ini tetap sama, karena sudah bekerja dengan baik.
   const processedWords = useMemo(() => {
-    if (!entries || entries.length === 0) {
-      return [];
-    }
-
+    if (!entries || entries.length === 0) return [];
     const wordFrequencies = new Map();
     entries.forEach(entry => {
+      if (!entry.text) return; // Pengaman jika ada entri tanpa teks
       const words = entry.text.toLowerCase().split(/\s+/);
       words.forEach(word => {
         const cleanedWord = word.replace(/[.,!?"'()]/g, '');
@@ -36,18 +31,14 @@ export default function WordCloudDisplay({ entries }) {
         }
       });
     });
-    
-    // Kita ubah ke array dan urutkan dari yang paling sering muncul
     return Array.from(wordFrequencies, ([text, value]) => ({ text, value }))
                 .sort((a, b) => b.value - a.value);
-
   }, [entries]);
 
   if (processedWords.length === 0) {
-    return <Text style={styles.emptyText}>Belum ada feedback yang cukup untuk ditampilkan...</Text>
+    return <Text style={styles.emptyText}>Belum ada feedback yang cukup...</Text>
   }
   
-  // Ini adalah bagian rendering yang baru
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.wordContainer}>
@@ -57,9 +48,9 @@ export default function WordCloudDisplay({ entries }) {
             style={[
               styles.wordText,
               { 
-                fontSize: 12 + (word.value * 4), // Ukuran font berdasarkan frekuensi
-                color: word.value > 3 ? palette.accent : palette.offWhite, // Warna berdasarkan frekuensi
-                fontWeight: word.value > 3 ? 'bold' : 'normal',
+                fontSize: 12 + (word.value * 4),
+                color: word.value > 2 ? palette.accent : palette.offWhite,
+                fontWeight: word.value > 2 ? 'bold' : 'normal',
               }
             ]}
           >
@@ -70,6 +61,7 @@ export default function WordCloudDisplay({ entries }) {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
