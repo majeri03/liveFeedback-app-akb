@@ -5,7 +5,6 @@ import { collection, addDoc, serverTimestamp, query, where, getDocs, onSnapshot,
 import { MaterialIcons } from '@expo/vector-icons';
 import { getCreatedSessions, saveCreatedSession, saveJoinedSession, getJoinedSessions } from '../utils/sessionManager';
 
-
 const palette = {
   surface: '#2F2F2F', 
   offWhite: '#F6F6F6',

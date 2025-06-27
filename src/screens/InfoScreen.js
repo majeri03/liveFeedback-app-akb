@@ -28,12 +28,14 @@ export default function InfoScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Tim Pengembang</Text>
-          <Text style={styles.developerName}>Majeri [ 105841103622 ]</Text>
-          <Text style={styles.developerName}>Ali Sulton S Palilati [105841102222]</Text>
-          <Text style={styles.developerName}>Ahmad Fatir [105841102922]</Text>
-          <Text style={styles.developerName}>Siti Marwa [105841100122]</Text>
-          <Text style={styles.developerName}>Nur Milani Hidayah [105841100822]</Text>
-          <Text style={styles.developerName}>Absarmarsal Rizwal Mahua [105841101522]</Text>
+          <View style={styles.section}>
+            <Text style={styles.developerName}>• Majeri       [105841103622]</Text>
+            <Text style={styles.developerName}>• Ali Sulton S Palilati [105841102222]</Text>
+            <Text style={styles.developerName}>• Ahmad Fatir [105841102922]</Text>
+            <Text style={styles.developerName}>• Siti Marwa [105841100122]</Text>
+            <Text style={styles.developerName}>• Nur Milani Hidayah [105841100822]</Text>
+            <Text style={styles.developerName}>• Absarmarsal Rizwal Mahua [105841101522]</Text>
+          </View>
         </View>
 
         <View style={styles.footer}>
@@ -84,9 +86,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   developerName: {
-    fontSize: 18,
+    fontSize: 15,
     color: palette.offWhite,
     marginTop: 10,
+    marginVertical: 16,
+    paddingHorizontal: 16,
   },
   developerRole: {
     fontSize: 14,
@@ -100,5 +104,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: palette.offWhite,
     textAlign: 'center',
-  }
+  },
+  
 });

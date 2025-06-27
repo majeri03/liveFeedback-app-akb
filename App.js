@@ -4,6 +4,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SplashScreen from './src/screens/SplashScreen';
 
 // Impor komponen navigasi dan semua layar kita
 import MainTabNavigator from './src/navigation/TabNavigator';
@@ -22,11 +23,11 @@ const MyTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    primary: palette.accent,      // Warna untuk elemen UI aktif (misal: warna badge tab)
-    background: palette.surface,  // Warna latar belakang utama layar
-    card: palette.primary,        // Warna latar belakang header dan kartu
-    text: palette.offWhite,       // Warna teks default
-    border: '#444',               // Warna border (misal: garis di atas tab bar)
+    primary: palette.accent,      
+    background: palette.surface,  
+    card: palette.primary,       
+    text: palette.offWhite,      
+    border: '#444',              
   },
 };
 
@@ -35,6 +36,7 @@ export default function App() {
     <>
       <NavigationContainer theme={MyTheme}>
         <Stack.Navigator
+          initialRouteName="Splash"
           screenOptions={{
             headerStyle: {
               backgroundColor: palette.primary,
@@ -48,6 +50,11 @@ export default function App() {
             }
           }}
         >
+          <Stack.Screen
+            name="Splash"
+            component={SplashScreen}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen 
             name="Main" 
             component={MainTabNavigator} 

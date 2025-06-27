@@ -1,29 +1,33 @@
 {
   "expo": {
-    "name": "liveFeedback-app-akb",
-    "slug": "liveFeedback-app-akb",
+    "name": "[Live Feedback KELOMPOK 1 6A]",
+    "slug": "[live-feedback-app-akb]",
     "version": "1.0.0",
+
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2F2F2F"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.[kelompok1-akb].livefeedbackapp"
     },
+    
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#2F2F2F"
       },
-      "edgeToEdgeEnabled": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "package": "com.[kelompok1-akb-6A].livefeedbackapp",
+      "versionCode": 1
     }
   }
 }
