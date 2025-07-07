@@ -33,8 +33,6 @@ export default function InfoScreen() {
             <Text style={styles.developerName}>• Ali Sulton S Palilati [105841102222]</Text>
             <Text style={styles.developerName}>• Ahmad Fatir [105841102922]</Text>
             <Text style={styles.developerName}>• Siti Marwa [105841100122]</Text>
-            <Text style={styles.developerName}>• Nur Milani Hidayah [105841100822]</Text>
-            <Text style={styles.developerName}>• Absarmarsal Rizwal Mahua [105841101522]</Text>
           </View>
         </View>
 
